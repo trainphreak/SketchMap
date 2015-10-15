@@ -5,7 +5,8 @@
 <p>SketchMap is a plugin designed to allow players to put images from the web onto a single or array of maps. These maps can be added to ItemFrames to complete the image and create awesome visual displays in vanilla minecraft.</p>
 <p>SketchMap is currently built using Spigot 1.8 but should run  perfectly fine on all current 1.8 versions of Bukkit. </p>
 
-<a href="https://github.com/slipswhitley/SketchMap" target="_blank">SketchMap on Github</a>
+<a href="https://github.com/slipswhitley/SketchMap" target="_blank">Original Github</a>
+<a href="https://github.com/trainphreak/SketchMap" target="_blank">Updated Github</a>
 </br>
 <h1>Guides:</h1>
 <h3>  Creating a new SketchMap</h3>
@@ -34,12 +35,6 @@
   <li> sketchmap.delete</li>
   <li> sketchmap.list</li>
 </ul>
-
-</br>
-<h1>Other:</h1>
-<h3>Join Our Factions Server:</h3>
-<p>Buyable / Mineable Monster Spawners, Custom Enchantments Plugin and Many more Custom Plugins!
-<p>IP: factions.MystianNetwork.com</p>
 
 </br>
 <h2>SketchMap is in BETA - Post any bugs in the comment section below and we will fix them ASAP</h2>
