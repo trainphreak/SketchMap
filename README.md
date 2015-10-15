@@ -16,7 +16,7 @@
   <li>All done! SketchMap will split your image into 128x128 pixel chunks and give it to you as Maps! You can put these maps onto ItemFrames to show your completed Image!</li>
 </ol>
 </br>
-<h1>Commands & Permissions:</h1>
+<h1>Commands, Permissions, and Configuration:</h1>
 <h3>  Commands:</h3>
 <ul>
   <li> /sketchmap create <MAP-ID> <URL> [RESIZE-X]:[RESIZE-Y] -  Creates a new SketchMap using image @ URL</li>
@@ -29,11 +29,18 @@
 
 <h3>  Permissions (Requires Vault - Otherwise OP is required)</h3>
 <ul>
-  <li>  sketchmap.create</li>
+  <li> sketchmap.create</li>
   <li> sketchmap.get</li>
   <li> sketchmap.place</li>
   <li> sketchmap.delete</li>
   <li> sketchmap.list</li>
+  <li> sketchmap.size.defaultexempt (exempts players from the size limit for creating/importing sketchmaps in the config file)</li>
+  <li> sketchmap.size.# (put an actual number here to set a limit for a player or group; they must also have sketchmap.size.defaultexempt)</li>
+</ul>
+
+<h3> Configuration: </h3>
+<ul>
+  <li></li>
 </ul>
 
 </br>
