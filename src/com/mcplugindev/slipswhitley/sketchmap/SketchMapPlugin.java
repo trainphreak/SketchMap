@@ -24,22 +24,26 @@ public class SketchMapPlugin extends JavaPlugin {
 	}
 
 	private void sendEnabledMessage() {
-		SketchMapUtils
-				.sendColoredConsoleMessage(ChatColor.GREEN + "|                                                   |");
-		SketchMapUtils.sendColoredConsoleMessage(ChatColor.GREEN + "|        " + ChatColor.AQUA + "SketchMap "
-				+ this.getDescription().getVersion() + " has been Enabled!" + ChatColor.GREEN + "          |");
-		SketchMapUtils.sendColoredConsoleMessage(ChatColor.GREEN + "|        " + ChatColor.AQUA
-				+ "  Authors: SlipsWhitley & Fyrinlight" + ChatColor.GREEN + "       |");
-		SketchMapUtils
-				.sendColoredConsoleMessage(ChatColor.GREEN + "|                                                   |");
+		SketchMapUtils.sendColoredConsoleMessage(ChatColor.GREEN + "|                                                   |");
+		SketchMapUtils.sendColoredConsoleMessage(ChatColor.GREEN + "|        "
+                                                         + ChatColor.AQUA + " SketchMap "
+                                                     + this.getDescription().getVersion() + " has been Enabled!"
+                                                                                          + ChatColor.GREEN + "         |");
+		SketchMapUtils.sendColoredConsoleMessage(ChatColor.GREEN + "|        "
+                                                         + ChatColor.AQUA + " Authors: SlipsWhitley & Fyrinlight "
+                                                                                            + ChatColor.GREEN + "       |");
+		SketchMapUtils.sendColoredConsoleMessage(ChatColor.GREEN + "|        "
+                                                         + ChatColor.AQUA + " Updated and modified by Trainphreak"
+                                                                                            + ChatColor.GREEN + "       |");
+		SketchMapUtils.sendColoredConsoleMessage(ChatColor.GREEN + "|                                                   |");
 	}
 
 	private void setupCommands() {
-		this.getCommand("sketchmap").setExecutor((CommandExecutor) new SketchMapCommand());
+		this.getCommand("sketchmap").setExecutor(new SketchMapCommand());
 	}
 
 	private void setupListeners() {
-		Bukkit.getPluginManager().registerEvents((Listener) new PlayerListener(), (Plugin) this);
+		Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
 	}
 
 	public static SketchMapPlugin getPlugin() {
