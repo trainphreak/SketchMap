@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>plugin.yml</name>
-			<type>1</type>
-			<location>C:/build-path/plugin.yml</location>
-		</link>
-	</linkedResources>
 </projectDescription>
