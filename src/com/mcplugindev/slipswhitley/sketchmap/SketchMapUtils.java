@@ -56,7 +56,7 @@ public class SketchMapUtils {
 		String imageString = null;
 		final ByteArrayOutputStream bos = new ByteArrayOutputStream();
 		try {
-			ImageIO.write(image, type, (OutputStream) bos);
+			ImageIO.write(image, type, bos);
 			final byte[] imageBytes = bos.toByteArray();
 			final BASE64Encoder encoder = new BASE64Encoder();
 			imageString = encoder.encode(imageBytes);
@@ -76,7 +76,7 @@ public class SketchMapUtils {
 		final RegisteredServiceProvider<Permission> permissionProvider = (RegisteredServiceProvider<Permission>) Bukkit
 				.getServicesManager().getRegistration((Class) Permission.class);
 		if (permissionProvider != null) {
-			SketchMapUtils.permission = (Permission) permissionProvider.getProvider();
+			SketchMapUtils.permission = permissionProvider.getProvider();
 		}
 		return SketchMapUtils.permission != null;
 	}
@@ -86,6 +86,38 @@ public class SketchMapUtils {
 			return player.isOp();
 		}
 		return SketchMapUtils.permission.playerHas(player, permission);
+	}
+
+	/** Returns 0 if the map size is lower than the player's limit
+	 Returns a positive number if the map is larger than the player's limit
+	 This number will be the player's limit (config or perms as applicable)
+	 */
+	public static int checkSizeLimits(Player player, int x, int y)
+	{
+        if (player.isOp())
+            return 0;
+
+		int largerDimension = Math.max(x,y);
+		if (hasPermission(player, "sketchmap.size.defaultexempt"))
+		{
+			for (int i = 1; i < largerDimension; i++)
+			{
+				if (hasPermission(player, "sketchmap.size." + i))
+				{
+					return i;
+				}
+			}
+		}
+		else
+		{
+			int maxDim = SketchMapPlugin.getMaxDimension();
+			if (largerDimension > maxDim)
+			{
+				return maxDim;
+			}
+		}
+
+		return 0;
 	}
 
 	public static short getMapID(final MapView map) {

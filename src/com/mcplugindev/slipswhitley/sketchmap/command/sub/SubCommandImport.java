@@ -1,20 +1,19 @@
 package com.mcplugindev.slipswhitley.sketchmap.command.sub;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
+import com.mcplugindev.slipswhitley.sketchmap.SketchMapAPI;
+import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
+import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
+import com.mcplugindev.slipswhitley.sketchmap.file.SketchMapLoader;
+import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import com.mcplugindev.slipswhitley.sketchmap.SketchMapAPI;
-import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
-import com.mcplugindev.slipswhitley.sketchmap.file.SketchMapLoader;
-import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SubCommandImport extends SketchMapSubCommand {
 	@Override
@@ -71,8 +70,8 @@ public class SubCommandImport extends SketchMapSubCommand {
 						+ "This file should be located in the SketchMap plugin directory.");
 				return;
 			}
-			Integer xPanes = null;
-			Integer yPanes = null;
+			Integer xFrames = null;
+			Integer yFrames = null;
 			if (args.length > 3) {
 				final String[] split = args[3].split(":");
 				if (split.length != 2) {
@@ -81,18 +80,24 @@ public class SubCommandImport extends SketchMapSubCommand {
 					return;
 				}
 				try {
-					xPanes = Integer.parseInt(split[0]);
-					yPanes = Integer.parseInt(split[1]);
+					xFrames = Integer.parseInt(split[0]);
+					yFrames = Integer.parseInt(split[1]);
 				} catch (Exception ex) {
 					player.sendMessage(ChatColor.RED + prefix + "Cannot resize image invalid resize arguments set. "
 							+ this.getSyntax());
 					return;
 				}
-				if (xPanes < 1 || yPanes < 1) {
+				if (xFrames < 1 || yFrames < 1) {
 					player.sendMessage(
 							ChatColor.RED + prefix + "Resize image arguments must be positive. " + this.getSyntax());
 					return;
 				}
+                int limit = SketchMapUtils.checkSizeLimits(player, xFrames, yFrames);
+                if (limit > 0)
+                {
+                    player.sendMessage(ChatColor.RED + prefix + "Image size exceeds maximum frame dimensions. Your maximum sketchmap size is " + limit + "x" + limit + " frames.");
+                    return;
+                }
 			}
 			try {
 				player.sendMessage(ChatColor.AQUA + prefix + "Downloading Image");
@@ -115,10 +120,16 @@ public class SubCommandImport extends SketchMapSubCommand {
 					while (imageY % 128 != 0) {
 						++imageY;
 					}
-					xPanes = imageX / 128;
-					yPanes = imageY / 128;
+					xFrames = imageX / 128;
+					yFrames = imageY / 128;
 				}
-				new SketchMap(image, args[1], xPanes, yPanes, false, format);
+                int limit = SketchMapUtils.checkSizeLimits(player, xFrames, yFrames);
+                if (limit > 0)
+                {
+                    player.sendMessage(ChatColor.RED + prefix + "Image size exceeds maximum frame dimensions. Your maximum sketchmap size is " + limit + "x" + limit + " frames.");
+                    return;
+                }
+				new SketchMap(image, args[1], xFrames, yFrames, false, format);
 				player.sendMessage(ChatColor.GREEN + prefix + "Map \"" + ChatColor.GOLD + args[1] + ChatColor.GREEN
 						+ "\" Created! " + ChatColor.GOLD + "Use \"/sketchmap get " + args[1] + "\""
 						+ " to get this map as map items.");

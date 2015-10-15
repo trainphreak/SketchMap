@@ -5,4 +5,3 @@ commands:
   sketchmap:
     description: SketchMap Core Command
     usage: /sketchmap help
-    
