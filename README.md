@@ -26,7 +26,7 @@ You should also keep in mind that Minecraft has a hard limit of just over 65k ma
   <li> /sketchmap get <MAP-ID> - Get a loaded map as Map Items</li>
   <li> /sketchmap place <MAP-ID> - Place an existing SketchMap with the upper-left corner on the block face you are looking at</li>
   <li> /sketchmap delete <MAP-ID> - Delete a loaded map</li>
-  <li> /sketchmap list - List all current SketchMaps</li>
+  <li> /sketchmap list [PAGENUM] - List all current SketchMaps</li>
   <li> /sketchmap help - Display Plugin Information</li>
 </ul>
 
