@@ -22,10 +22,11 @@ You should also keep in mind that Minecraft has a hard limit of just over 65k ma
 <h1>Commands, Permissions, and Configuration:</h1>
 <h3>  Commands:</h3>
 <ul>
-  <li> /sketchmap create <MAP-ID> <URL> [XFRAMES]:[YFRAMES] -  Creates a new SketchMap using image @ URL</li>
-  <li> /sketchmap get <MAP-ID> - Get a loaded map as Map Items</li>
-  <li> /sketchmap place <MAP-ID> - Place an existing SketchMap with the upper-left corner on the block face you are looking at</li>
-  <li> /sketchmap delete <MAP-ID> - Delete a loaded map</li>
+  <li> /sketchmap create \<MAP-ID\> \<URL\> [XFRAMES]:[YFRAMES] -  Creates a new SketchMap using image @ URL</li>
+  <li> /sketchmap import \<MAP-ID\> \<FILEPATH\> [XFRAMES]:[YFRAMES] -  Creates a new SketchMap using file in \<server path\>/plugins/SketchMap</li>
+  <li> /sketchmap get \<MAP-ID\> - Get a loaded map as Map Items</li>
+  <li> /sketchmap place \<MAP-ID\> - Place an existing SketchMap with the upper-left corner on the block face you are looking at</li>
+  <li> /sketchmap delete \<MAP-ID\> - Delete a loaded map</li>
   <li> /sketchmap list [PAGENUM] - List all current SketchMaps</li>
   <li> /sketchmap help - Display Plugin Information</li>
 </ul>
@@ -44,5 +45,5 @@ Note: if you are OP, you are able to run all the commands and you have no size l
 
 <h3>  Configuration: </h3>
 <ul>
-  <li>default-max-dimension: (int) The maximum size of a sketchmap that can be created by a player without the defaultexempt permission</li>
+  <li>default-max-dimension: # The maximum size of a sketchmap that can be created by a player without the defaultexempt permission</li>
 </ul>
