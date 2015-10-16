@@ -50,14 +50,14 @@ public class SubCommandPlace extends SketchMapSubCommand {
 			sender.sendMessage(ChatColor.RED + prefix + "Command cannot be used " + "from the console.");
 			return;
 		}
-		if (args.length != 2) {
+		if (args.length != 1) {
 			sender.sendMessage(
 					ChatColor.RED + prefix + "Invalid command Arguments. " + "Try, \"" + this.getSyntax() + "\"");
 			return;
 		}
-		final SketchMap map = SketchMapAPI.getMapByID(args[1]);
+		final SketchMap map = SketchMapAPI.getMapByID(args[0]);
 		if (map == null) {
-			sender.sendMessage(ChatColor.RED + prefix + "Could not find Map \"" + args[1].toLowerCase() + "\"");
+			sender.sendMessage(ChatColor.RED + prefix + "Could not find Map \"" + args[0].toLowerCase() + "\"");
 			return;
 		}
 		if (map.isPublicProtected()) {
