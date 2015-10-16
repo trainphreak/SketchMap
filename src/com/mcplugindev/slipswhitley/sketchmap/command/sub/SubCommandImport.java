@@ -43,19 +43,19 @@ public class SubCommandImport extends SketchMapSubCommand {
 			return;
 		}
 		final Player player = (Player) sender;
-		if (args.length < 3) {
+		if (args.length < 2) {
 			player.sendMessage(ChatColor.RED + prefix + "Error in Command Syntax. Try, \"" + this.getSyntax() + "\"");
 			return;
 		}
-		if (args[1].length() < 3 || args[1].length() > 16) {
+		if (args[0].length() < 3 || args[0].length() > 16) {
 			player.sendMessage(ChatColor.RED + prefix + "Map ID must be between 3 - 16 Characters");
 			return;
 		}
-		if (!StringUtils.isAlphanumeric(args[1].replace("_", "").replace("-", ""))) {
+		if (!StringUtils.isAlphanumeric(args[0].replace("_", "").replace("-", ""))) {
 			player.sendMessage(ChatColor.RED + prefix + "Map ID must be Alphanumeric");
 			return;
 		}
-		if (SketchMapAPI.getMapByID(args[1]) != null) {
+		if (SketchMapAPI.getMapByID(args[0]) != null) {
 			if (SketchMapAPI.getMapByID(args[1]).isPublicProtected()) {
 				player.sendMessage(ChatColor.RED + prefix + "An External Plugin has reserved "
 						+ "that Map ID. Try a different Map ID");
@@ -63,7 +63,7 @@ public class SubCommandImport extends SketchMapSubCommand {
 			}
 			player.sendMessage(ChatColor.RED + prefix + "A map by that id already exists.");
 		} else {
-			final File file = new File(String.valueOf(SketchMapLoader.getDataFolder().toString()) + "/" + args[2]);
+			final File file = new File(String.valueOf(SketchMapLoader.getDataFolder().toString()) + "/" + args[1]);
 			if (!file.exists()) {
 				player.sendMessage(ChatColor.RED + prefix + "Could not find specified image file. "
 						+ "Insure that you have typed the entire file name (Case sensitive including extension) correctly. "
@@ -72,8 +72,8 @@ public class SubCommandImport extends SketchMapSubCommand {
 			}
 			Integer xFrames = null;
 			Integer yFrames = null;
-			if (args.length > 3) {
-				final String[] split = args[3].split(":");
+			if (args.length > 2) {
+				final String[] split = args[2].split(":");
 				if (split.length != 2) {
 					player.sendMessage(ChatColor.RED + prefix + "Cannot resize image invalid resize arguments set. "
 							+ this.getSyntax());
@@ -111,7 +111,7 @@ public class SubCommandImport extends SketchMapSubCommand {
 									+ "But animated Maps will be coming soon.");
 					return;
 				}
-				if (args.length == 3) {
+				if (args.length == 2) {
 					int imageX = image.getWidth();
 					int imageY = image.getHeight();
 					while (imageX % 128 != 0) {
@@ -129,11 +129,11 @@ public class SubCommandImport extends SketchMapSubCommand {
                     player.sendMessage(ChatColor.RED + prefix + "Image size exceeds maximum frame dimensions. Your maximum sketchmap size is " + limit + "x" + limit + " frames.");
                     return;
                 }
-				new SketchMap(image, args[1], xFrames, yFrames, false, format);
-				player.sendMessage(ChatColor.GREEN + prefix + "Map \"" + ChatColor.GOLD + args[1] + ChatColor.GREEN
-						+ "\" Created! " + ChatColor.GOLD + "Use \"/sketchmap get " + args[1] + "\""
+				new SketchMap(image, args[0], xFrames, yFrames, false, format);
+				player.sendMessage(ChatColor.GREEN + prefix + "Map \"" + ChatColor.GOLD + args[0] + ChatColor.GREEN
+						+ "\" Created! " + ChatColor.GOLD + "Use \"/sketchmap get " + args[0] + "\""
 						+ " to get this map as map items.");
-				player.sendMessage(ChatColor.AQUA + " Or use \"" + ChatColor.GOLD + "/sketchmap place " + args[1]
+				player.sendMessage(ChatColor.AQUA + " Or use \"" + ChatColor.GOLD + "/sketchmap place " + args[0]
 						+ ChatColor.AQUA + "\" to place it directly onto a wall.");
 			} catch (IOException e) {
 				player.sendMessage(ChatColor.RED + prefix + "Unable to load/find image at URL."
