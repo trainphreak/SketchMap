@@ -34,6 +34,7 @@ You should also keep in mind that Minecraft has a hard limit of just over 65k ma
 <h3>  Permissions (Requires Vault - Otherwise OP is required)</h3>
 <ul>
   <li> sketchmap.create</li>
+  <li> sketchmap.import</li>
   <li> sketchmap.get</li>
   <li> sketchmap.place</li>
   <li> sketchmap.delete</li>
