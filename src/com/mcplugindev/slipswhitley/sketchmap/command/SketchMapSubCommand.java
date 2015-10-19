@@ -1,47 +1,47 @@
 package com.mcplugindev.slipswhitley.sketchmap.command;
 
+import com.mcplugindev.slipswhitley.sketchmap.command.sub.*;
+import org.bukkit.command.CommandSender;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.bukkit.command.CommandSender;
+public abstract class SketchMapSubCommand
+{
+    private static List<SketchMapSubCommand> commands;
 
-import com.mcplugindev.slipswhitley.sketchmap.command.sub.SubCommandCreate;
-import com.mcplugindev.slipswhitley.sketchmap.command.sub.SubCommandDelete;
-import com.mcplugindev.slipswhitley.sketchmap.command.sub.SubCommandGet;
-import com.mcplugindev.slipswhitley.sketchmap.command.sub.SubCommandHelp;
-import com.mcplugindev.slipswhitley.sketchmap.command.sub.SubCommandImport;
-import com.mcplugindev.slipswhitley.sketchmap.command.sub.SubCommandList;
-import com.mcplugindev.slipswhitley.sketchmap.command.sub.SubCommandPlace;
+    public abstract String getSub();
 
-public abstract class SketchMapSubCommand {
-	private static List<SketchMapSubCommand> commands;
+    public abstract String getPermission();
 
-	public abstract String getSub();
+    public abstract String getDescription();
 
-	public abstract String getPermission();
+    public abstract String getSyntax();
 
-	public abstract String getDescription();
+    public abstract void onCommand(final CommandSender p0, final String[] p1, final String p2);
 
-	public abstract String getSyntax();
+    public static void loadCommands()
+    {
+        SketchMapSubCommand.commands = new ArrayList<>();
+        loadCommand(new SubCommandCreate());
+        loadCommand(new SubCommandDelete());
+        loadCommand(new SubCommandGet());
+        loadCommand(new SubCommandHelp());
+        loadCommand(new SubCommandImport());
+        loadCommand(new SubCommandList());
+        loadCommand(new SubCommandPlace());
+        loadCommand(new SubCommandPrivacy());
+        loadCommand(new SubCommandPermit());
+        loadCommand(new SubCommandUnpermit());
+    }
 
-	public abstract void onCommand(final CommandSender p0, final String[] p1, final String p2);
+    private static void loadCommand(final SketchMapSubCommand sub)
+    {
+        SketchMapSubCommand.commands.add(sub);
+    }
 
-	public static void loadCommands() {
-		SketchMapSubCommand.commands = new ArrayList<SketchMapSubCommand>();
-		loadCommand(new SubCommandCreate());
-		loadCommand(new SubCommandDelete());
-		loadCommand(new SubCommandGet());
-		loadCommand(new SubCommandHelp());
-		loadCommand(new SubCommandImport());
-		loadCommand(new SubCommandList());
-		loadCommand(new SubCommandPlace());
-	}
-
-	private static void loadCommand(final SketchMapSubCommand sub) {
-		SketchMapSubCommand.commands.add(sub);
-	}
-
-	public static List<SketchMapSubCommand> getCommands() {
-		return SketchMapSubCommand.commands;
-	}
+    public static List<SketchMapSubCommand> getCommands()
+    {
+        return SketchMapSubCommand.commands;
+    }
 }
