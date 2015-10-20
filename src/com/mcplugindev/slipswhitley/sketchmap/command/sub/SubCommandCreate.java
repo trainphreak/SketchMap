@@ -1,6 +1,7 @@
 package com.mcplugindev.slipswhitley.sketchmap.command.sub;
 
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapAPI;
+import com.mcplugindev.slipswhitley.sketchmap.SketchMapPlugin;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
 import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
@@ -38,7 +39,7 @@ public class SubCommandCreate extends SketchMapSubCommand
     @Override
     public String getSyntax()
     {
-        return "/sketchmap create <map-id> <URL> [XFRAMES]:[YFRAMES]";
+        return "/sketchmap create <map-id> <URL> [XFRAMES]:[YFRAMES] [public/private]";
     }
 
     @Override
@@ -67,7 +68,14 @@ public class SubCommandCreate extends SketchMapSubCommand
         }
         if (SketchMapAPI.getMapByID(args[0]) == null)
         {
-            URL url = null;
+            // Since the map doesn't already exist, check player's ownership limits
+            if (!SketchMapUtils.checkAllowedMoreMaps(player))
+            {
+                player.sendMessage(ChatColor.RED + prefix + "You have reached your limit for number of sketchmaps owned. If you want to make another, delete one of your existing maps.");
+                return;
+            }
+
+            URL url;
             try
             {
                 url = new URL(args[1]);
@@ -79,6 +87,7 @@ public class SubCommandCreate extends SketchMapSubCommand
             }
             Integer xFrames = null;
             Integer yFrames = null;
+            SketchMap.PrivacyLevel privacyLevel = SketchMapPlugin.getDefaultPrivacyLevel();
             if (args.length > 2)
             {
                 final String[] split = args[2].split(":");
@@ -105,11 +114,37 @@ public class SubCommandCreate extends SketchMapSubCommand
                             ChatColor.RED + prefix + "Resize image arguments must be positive. " + this.getSyntax());
                     return;
                 }
-                int limit = SketchMapUtils.checkSizeLimits(player,xFrames,yFrames);
+                int limit = SketchMapUtils.checkSizeLimits(player, xFrames, yFrames);
                 if (limit > 0)
                 {
                     player.sendMessage(ChatColor.RED + prefix + "Image size exceeds maximum frame dimensions. Your maximum sketchmap size is " + limit + "x" + limit + " frames.");
                     return;
+                }
+
+                // Check for privacy level arg
+                if (args.length > 3)
+                {
+                    if (SketchMapUtils.hasPermission(player, "sketchmap.privacy"))
+                    {
+                        if (args[3].equalsIgnoreCase("public"))
+                        {
+                            privacyLevel = SketchMap.PrivacyLevel.PUBLIC;
+                        }
+                        else if (args[3].equalsIgnoreCase("private"))
+                        {
+                            privacyLevel = SketchMap.PrivacyLevel.PRIVATE;
+                        }
+                        else
+                        {
+                            player.sendMessage(ChatColor.RED + prefix + "Privacy level must be 'public' or 'private'. " + this.getSyntax());
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        player.sendMessage(ChatColor.RED + prefix + "You do not have permission to set privacy levels on sketchmaps.");
+                        return;
+                    }
                 }
             }
             try
@@ -147,7 +182,7 @@ public class SubCommandCreate extends SketchMapSubCommand
                     player.sendMessage(ChatColor.RED + prefix + "Image size exceeds maximum frame dimensions. Your maximum sketchmap size is " + limit + "x" + limit + " frames.");
                     return;
                 }
-                new SketchMap(image, args[0], xFrames, yFrames, false, format);
+                new SketchMap(image, args[0], player, privacyLevel, xFrames, yFrames, false, format);
                 player.sendMessage(ChatColor.GREEN + prefix + "Map \"" + ChatColor.GOLD + args[0] + ChatColor.GREEN
                         + "\" Created! " + ChatColor.GOLD + "Use \"/sketchmap get " + args[0] + "\""
                         + " to get this map as map items.");
