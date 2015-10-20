@@ -94,7 +94,7 @@ public class SubCommandList extends SketchMapSubCommand
         int pageSize = 15;
         int numPages = (maps.size() / pageSize) + (maps.size() % pageSize == 0 ? 0 : 1); // This works the same as array length (last page number is one less than number of pages, yay zero!)
 
-        int pageToShow;
+        int pageToShow = 0;
         if (args.length > 0)
         {
             try

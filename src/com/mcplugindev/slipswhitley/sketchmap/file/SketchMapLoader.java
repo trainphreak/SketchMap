@@ -64,6 +64,6 @@ public class SketchMapLoader
             if (i % 10 == 9)
                 SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] " + (i + 1) + "/" + listFiles.length + " sketchmaps loaded.");
         }
-        SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] All sketchmaps loaded!");
+        SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] Finished! " + listFiles.length + " sketchmaps loaded");
     }
 }
