@@ -7,7 +7,7 @@
 </br>
 I am not the original developer of SketchMap. You can find the original version here: <a href="https://github.com/slipswhitley/SketchMap" target="_blank">Original Github</a></br>
 You can find my version here: <a href="https://github.com/trainphreak/SketchMap">Updated Github</a></br>
-My wiki with updated documentation is here: <a href="https://github.com/trainphreak/SketchMap">Updated Wiki</a></br>
+My wiki with updated documentation is here: <a href="https://github.com/trainphreak/SketchMap/wiki">Updated Wiki</a></br>
 
 <h1>Guides:</h1>
 <h3>  Creating a new SketchMap</h3>
