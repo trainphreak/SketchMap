@@ -76,6 +76,10 @@ public class SubCommandPrivacy extends SketchMapSubCommand
         else
         {
             sender.sendMessage(ChatColor.RED + prefix + "Invalid privacy level. You must set the privacy level to 'public' or 'private'.");
+            return;
         }
+
+        sender.sendMessage(ChatColor.GREEN + prefix + "Privacy level for map " + sketchMap.getID() + " set to " + sketchMap.getPrivacyLevel() + ".");
+        sketchMap.save();
     }
 }

@@ -2,7 +2,9 @@ package com.mcplugindev.slipswhitley.sketchmap.file;
 
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapAPI;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapPlugin;
+import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 import java.io.File;
 import java.util.logging.Level;
@@ -45,9 +47,9 @@ public class SketchMapLoader
     public static void loadMaps()
     {
         File[] listFiles = getMapsDirectory().listFiles();
-        for (int i = 0; i < listFiles.length; ++i)
+        for (int i = 0; i < listFiles.length; i++)
         {
-            final File file = listFiles[i];
+            File file = listFiles[i];
             if (file.getName().endsWith(".sketchmap"))
             {
                 try
@@ -59,6 +61,9 @@ public class SketchMapLoader
                     Bukkit.getLogger().log(Level.WARNING, ex.getMessage(), ex);
                 }
             }
+            if (i % 10 == 9)
+                SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] " + (i + 1) + "/" + listFiles.length + " sketchmaps loaded.");
         }
+        SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] All sketchmaps loaded!");
     }
 }

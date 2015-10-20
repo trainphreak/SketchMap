@@ -144,30 +144,34 @@ public class SketchMapUtils
      */
     public static boolean checkAllowedMoreMaps(Player player)
     {
-        // If player has perms for unlimited, allowed
-        if (SketchMapUtils.hasPermission(player, "sketchmap.ownlimit.unlimited"))
-            return true;
-
-        // If player owns maps equal to or greater than their perm limit (if they have a limit perm), not allowed
         int ownedMaps = 0;
         for (final SketchMap map : SketchMap.getLoadedMaps())
         {
             if (map.getOwnerUUID().equals(player.getUniqueId()))
                 ownedMaps++;
         }
-        for (int i = 1; i <= ownedMaps; i++)
+
+        // If player is exempted from the default limit
+        if (hasPermission(player, "sketchmap.ownlimit.defaultexempt"))
         {
-            if (SketchMapUtils.hasPermission(player, "sketchmap.ownlimit." + i))
-                return false;
+            // If player has a limit perm lower than or equal to their current number of maps, not allowed
+            for (int i = 1; i <= ownedMaps; i++)
+            {
+                if (hasPermission(player, "sketchmap.ownlimit." + i))
+                    return false;
+            }
+
+            // If config has no default limit, allowed (note that the perms will override the config)
+            if (SketchMapPlugin.getMaxOwnedMaps() == 0)
+                return true;
         }
-
-        // If config has no default limit, allowed (note that the perms will override the config)
-        if (SketchMapPlugin.getMaxOwnedMaps() == 0)
-            return true;
-
-        // If player owns maps greater than the default limit, not allowed
-        if (ownedMaps < SketchMapPlugin.getMaxOwnedMaps())
-            return false;
+        else
+        {
+            // If player owns maps greater than the default limit and there is an actual default limit, not allowed
+            if (SketchMapPlugin.getMaxOwnedMaps() != 0)
+                if (ownedMaps > SketchMapPlugin.getMaxOwnedMaps())
+                    return false;
+        }
 
         // If nothing else, allowed
         return true;

@@ -37,7 +37,8 @@ public class SubCommandHelp extends SketchMapSubCommand
         sender.sendMessage(" ");
         sender.sendMessage(ChatColor.GREEN + "SketchMap Version "
                 + SketchMapPlugin.getPlugin().getDescription().getVersion() + " - Authors " + ChatColor.GOLD
-                + "SlipsWhitley" + ChatColor.GREEN + " & " + ChatColor.GOLD + "Fyrinlight");
+                + "SlipsWhitley" + ChatColor.GREEN + " & " + ChatColor.GOLD + "Fyrinlight" + ChatColor.GREEN
+                + " - Updated and modified by " + ChatColor.GOLD + "Trainphreak");
         sender.sendMessage(ChatColor.AQUA + " SketchMap is a plugin designed to allow players to put images"
                 + " from the web onto a single or array of maps. These maps can be added to ItemFrames to complete "
                 + "the image and create awesome visual displays in vanilla minecraft.");

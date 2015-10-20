@@ -24,8 +24,8 @@ public class RelativeLocation
         {
             return null;
         }
-        int x = 0;
-        int y = 0;
+        int x;
+        int y;
         try
         {
             x = Integer.parseInt(args[0]);

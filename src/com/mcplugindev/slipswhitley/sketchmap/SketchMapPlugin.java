@@ -21,6 +21,7 @@ public class SketchMapPlugin extends JavaPlugin
     public void onEnable()
     {
         SketchMapPlugin.plugin = this;
+        SketchMapUtils.setupPermissions();
         this.setupConfig();
         this.loadConfig();
         this.setupCommands();
@@ -32,12 +33,20 @@ public class SketchMapPlugin extends JavaPlugin
     private void loadConfig()
     {
         maxDimension = config.getInt("default-max-dimension");
+        SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] Default max sketchmap dimensions: " + maxDimension + "x" + maxDimension);
         String tempPrivacyLevel = config.getString("default-privacy-level");
         if (tempPrivacyLevel.equalsIgnoreCase("private"))
+        {
             defaultPrivacyLevel = SketchMap.PrivacyLevel.PRIVATE;
+            SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] Default privacy level: Private");
+        }
         else
+        {
             defaultPrivacyLevel = SketchMap.PrivacyLevel.PUBLIC;
-        maxOwnedMaps = config.getInt("max-owned-maps");
+            SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] Default privacy level: Public");
+        }
+        maxOwnedMaps = config.getInt("default-max-owned-maps");
+        SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] Default max owned maps: " + maxOwnedMaps);
     }
 
     private void sendEnabledMessage()

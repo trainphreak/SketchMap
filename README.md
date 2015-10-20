@@ -2,12 +2,13 @@
 
 <h1>About SketchMap</h1>
 
-<p>SketchMap is a plugin designed to allow players to put images from the web onto a single or array of maps. These maps can be added to ItemFrames to complete the image and create awesome visual displays in vanilla minecraft.</p>
-<p>SketchMap is currently built using Spigot 1.8 but should run  perfectly fine on all current 1.8 versions of Bukkit. </p>
-
-<a href="https://github.com/slipswhitley/SketchMap" target="_blank">Original Github</a> </br>
-<a href="https://github.com/trainphreak/SketchMap" target="_blank">Updated Github</a>
+<p>SketchMap is a plugin designed to allow players to put images from the web onto a single map or a set of maps. These maps can be added to ItemFrames to complete the image and create awesome visual displays in unmodded minecraft.</p>
+<p>SketchMap is currently built using Spigot 1.8, but should run fine on all current 1.8 versions of Bukkit. </p>
 </br>
+I am not the original developer of SketchMap. You can find the original version here: <a href="https://github.com/slipswhitley/SketchMap" target="_blank">Original Github</a></br>
+You can find my version here: <a href="https://github.com/trainphreak/SketchMap">Updated Github</a></br>
+My wiki with updated documentation is here: <a href="https://github.com/trainphreak/SketchMap">Updated Wiki</a></br>
+
 <h1>Guides:</h1>
 <h3>  Creating a new SketchMap</h3>
 <ol> 
@@ -17,34 +18,5 @@
 </ol>
 <h3>  Some notes regarding large sketchmaps</h3>
 Having a lot of map items (several thousand) in one area can cause serious client-side lag, even on high-end machines. Try to not make incredibly large sketchmaps; 100x100 would be really cool, but if players can't get close enough to see it, is it really worth it?</br>
-You should also keep in mind that Minecraft has a hard limit of just over 65k maps, so if you create large sketchmaps, you will use up that limit very quickly! (a 50x50 sketchmap uses 2500 maps)
+You should also keep in mind that Minecraft has a hard limit of 32768 map items, so if you create large sketchmaps, you will use up that limit very quickly! (a 50x50 sketchmap uses 2500 map items)
 </br>
-<h1>Commands, Permissions, and Configuration:</h1>
-<h3>  Commands:</h3>
-<ul>
-  <li> /sketchmap create -  Creates a new SketchMap using image at a URL</li>
-  <li> /sketchmap import -  Creates a new SketchMap using file in \<server path\>/plugins/SketchMap</li>
-  <li> /sketchmap get - Get a loaded map as Map Items</li>
-  <li> /sketchmap place - Place an existing SketchMap with the upper-left corner on the block face you are looking at</li>
-  <li> /sketchmap delete - Delete a loaded map</li>
-  <li> /sketchmap list - List all current SketchMaps</li>
-  <li> /sketchmap help - Display Plugin Information</li>
-</ul>
-
-<h3>  Permissions (Requires Vault - Otherwise OP is required)</h3>
-<ul>
-  <li> sketchmap.create</li>
-  <li> sketchmap.import</li>
-  <li> sketchmap.get</li>
-  <li> sketchmap.place</li>
-  <li> sketchmap.delete</li>
-  <li> sketchmap.list</li>
-  <li> sketchmap.size.defaultexempt (exempts players from the size limit for creating/importing sketchmaps in the config file)</li>
-  <li> sketchmap.size.# (put an actual number here to set a limit for a player or group; they must also have sketchmap.size.defaultexempt)</li>
-</ul>
-Note: if you are OP, you are able to run all the commands and you have no size limits.
-
-<h3>  Configuration: </h3>
-<ul>
-  <li>default-max-dimension: # The maximum size of a sketchmap that can be created by a player without the defaultexempt permission</li>
-</ul>

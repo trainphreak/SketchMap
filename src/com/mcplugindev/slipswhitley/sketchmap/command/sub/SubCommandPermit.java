@@ -11,9 +11,6 @@ import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
-/**
- * Created by Gabriel on 10/17/2015.
- */
 public class SubCommandPermit extends SketchMapSubCommand
 {
     @Override
@@ -54,6 +51,11 @@ public class SubCommandPermit extends SketchMapSubCommand
             sender.sendMessage(ChatColor.RED + prefix + "Could not find Map \"" + args[0].toLowerCase() + "\"");
             return;
         }
+        if (sketchMap.getPrivacyLevel() == SketchMap.PrivacyLevel.PUBLIC)
+        {
+            sender.sendMessage(ChatColor.RED + prefix + "That map is publicly accessible!");
+            return;
+        }
         if (sender instanceof Player)
         {
             final Player player = (Player) sender;
@@ -79,5 +81,6 @@ public class SubCommandPermit extends SketchMapSubCommand
 
         sketchMap.addAllowedUUID(otherUUID);
         sender.sendMessage(ChatColor.DARK_AQUA + prefix + args[1] + " is now permitted to use sketchmap " + args[0] + ".");
+        sketchMap.save();
     }
 }

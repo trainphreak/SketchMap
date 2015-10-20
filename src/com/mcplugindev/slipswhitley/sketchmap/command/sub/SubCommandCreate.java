@@ -124,7 +124,7 @@ public class SubCommandCreate extends SketchMapSubCommand
                 // Check for privacy level arg
                 if (args.length > 3)
                 {
-                    if (SketchMapUtils.hasPermission(player, "sketchmap.privacy.set"))
+                    if (SketchMapUtils.hasPermission(player, "sketchmap.privacy"))
                     {
                         if (args[3].equalsIgnoreCase("public"))
                         {

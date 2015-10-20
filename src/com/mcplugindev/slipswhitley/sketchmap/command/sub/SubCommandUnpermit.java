@@ -51,6 +51,11 @@ public class SubCommandUnpermit extends SketchMapSubCommand
             sender.sendMessage(ChatColor.RED + prefix + "Could not find Map \"" + args[0].toLowerCase() + "\"");
             return;
         }
+        if (sketchMap.getPrivacyLevel() == SketchMap.PrivacyLevel.PUBLIC)
+        {
+            sender.sendMessage(ChatColor.RED + prefix + "That map is publicly accessible!");
+            return;
+        }
         if (sender instanceof Player)
         {
             final Player player = (Player) sender;
@@ -76,5 +81,6 @@ public class SubCommandUnpermit extends SketchMapSubCommand
 
         sketchMap.removeAllowedUUID(otherUUID);
         sender.sendMessage(ChatColor.DARK_AQUA + prefix + args[1] + " is no longer permitted to use sketchmap " + args[0] + ".");
+        sketchMap.save();
     }
 }
