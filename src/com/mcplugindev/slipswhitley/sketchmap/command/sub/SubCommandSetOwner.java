@@ -9,6 +9,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.UUID;
+
 public class SubCommandSetOwner extends SketchMapSubCommand
 {
     @Override
@@ -61,8 +63,13 @@ public class SubCommandSetOwner extends SketchMapSubCommand
                 return;
             }
         }
+        map.addAllowedUUID(map.getOwnerUUID());
 
-        Player newOwner = Bukkit.getServer().getOfflinePlayer(args[1]).getPlayer();
-        map.setOwnerUUID(newOwner.getUniqueId());
+        UUID newOwnerUUID = Bukkit.getServer().getOfflinePlayer(args[1]).getPlayer().getUniqueId();
+        if (map.getAllowedUUID().contains(newOwnerUUID))
+            map.removeAllowedUUID(newOwnerUUID);
+
+        map.setOwnerUUID(newOwnerUUID);
+        sender.sendMessage(ChatColor.GREEN + prefix + Bukkit.getServer().getOfflinePlayer(newOwnerUUID).getName() + " is now the owner of map " + map.getID());
     }
 }
