@@ -1,9 +1,11 @@
 package com.mcplugindev.slipswhitley.sketchmap.command.sub;
 
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapPlugin;
+import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class SubCommandHelp extends SketchMapSubCommand
 {
@@ -46,9 +48,10 @@ public class SubCommandHelp extends SketchMapSubCommand
         sender.sendMessage(ChatColor.GOLD + "SketchMap Commands:");
         for (final SketchMapSubCommand command : SketchMapSubCommand.getCommands())
         {
+            if (sender instanceof Player && !SketchMapUtils.hasPermission((Player) sender, command.getPermission()))
+                continue;
             sender.sendMessage(ChatColor.GREEN + "- " + ChatColor.AQUA + command.getSyntax() + ChatColor.GOLD + " - "
                     + ChatColor.GREEN + command.getDescription());
         }
-        sender.sendMessage(" ");
     }
 }

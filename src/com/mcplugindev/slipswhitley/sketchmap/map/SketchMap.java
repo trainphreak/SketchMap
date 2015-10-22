@@ -100,6 +100,11 @@ public class SketchMap
         return this.ownerUUID;
     }
 
+    public void setOwnerUUID(UUID newOwnerUUID)
+    {
+        this.ownerUUID = newOwnerUUID;
+    }
+
     public PrivacyLevel getPrivacyLevel()
     {
         return this.privacyLevel;
@@ -181,7 +186,8 @@ public class SketchMap
         return SketchMap.sketchMaps;
     }
 
-	public enum BaseFormat {
+    public enum BaseFormat
+    {
         PNG, JPEG;
 
         public String getExtension()
