@@ -13,7 +13,7 @@ My wiki with updated documentation is here: <a href="https://github.com/trainphr
 <h3>  Creating a new SketchMap</h3>
 <ol> 
   <li>Upload your desired image using a online tool like <a href="http://imgur.com>Imgur" target="_blank">Imgur</a> and copy the image URL.</li>
-  <li>Now use the command "/sketchmap create <map-name> <URL>" Use Ctrl+V to paste an Image URL</li>
+  <li>Now use the command "/sketchmap create" Use Ctrl+V to paste an Image URL</li>
   <li>All done! SketchMap will split your image into 128x128 pixel chunks and give it to you as Maps! You can put these maps onto ItemFrames to show your completed Image!</li>
 </ol>
 <h3>  Some notes regarding large sketchmaps</h3>
