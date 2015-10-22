@@ -3,6 +3,7 @@ package com.mcplugindev.slipswhitley.sketchmap.command.sub;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
 import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,7 +35,7 @@ public class SubCommandList extends SketchMapSubCommand
     @Override
     public String getSyntax()
     {
-        return "/sketchmap list [mine/#] -- /sketchmap list <mine> [#]";
+        return "/sketchmap list [mine/playername/#] -- /sketchmap list <mine/playername> [#]";
     }
 
     @Override
@@ -47,65 +48,130 @@ public class SubCommandList extends SketchMapSubCommand
             return;
         }
 
+        boolean firstArgIsPageNum = true;
+
         if (sender instanceof Player)
         {
             final Player player = (Player) sender;
             player.sendMessage(ChatColor.GREEN + "Loading list of sketchmaps...");
 
-            for (final SketchMap map : SketchMap.getLoadedMaps())
+            if (args.length == 0)
             {
-                if (args.length != 0 && args[0].equalsIgnoreCase("mine"))
-                {
-                    if (!map.getOwnerUUID().equals(player.getUniqueId()))
-                        continue;
-                }
-                else
+                for (final SketchMap map : SketchMap.getLoadedMaps())
                 {
                     if ((map.getPrivacyLevel() == SketchMap.PrivacyLevel.PRIVATE &&
                             !map.getOwnerUUID().equals(player.getUniqueId()) &&
                             !map.getAllowedUUID().contains(player.getUniqueId()) &&
-                            !SketchMapUtils.hasPermission(player, "sketchmap.privacy.admin")) ||
-                            map.isPublicProtected())
-                    {
+                            !SketchMapUtils.hasPermission(player, "sketchmap.privacy.admin")))
                         continue;
+                    if (map.isPublicProtected())
+                        continue;
+                    maps.add(map.getID());
+                }
+            }
+            else
+            {
+                for (char c : args[0].toCharArray())
+                {
+                    if (!Character.isDigit(c) && c != '-')
+                    {
+                        if (!Character.isAlphabetic(c) && c != '_')
+                        {
+                            sender.sendMessage(ChatColor.RED + prefix + "Error in Command Syntax. Try, \"" + this.getSyntax() + "\"");
+                            return;
+                        }
+                        firstArgIsPageNum = false;
+                        break;
                     }
                 }
-                maps.add(map.getID());
-            }
-        }
-        else
-        {
-            if (args.length != 0 && args[0].equalsIgnoreCase("mine"))
-            {
-                sender.sendMessage(ChatColor.RED + prefix + "The console doesn't own any sketchmaps!");
-                return;
-            }
-            for (final SketchMap map : SketchMap.getLoadedMaps())
-            {
-                if (map.isPublicProtected())
+
+                if (!firstArgIsPageNum)
                 {
-                    continue;
+                    if (args[0].equalsIgnoreCase("mine"))
+                    {
+                        for (final SketchMap map : SketchMap.getLoadedMaps())
+                        {
+                            if (map.isPublicProtected())
+                                continue;
+                            if (!map.getOwnerUUID().equals(player.getUniqueId()))
+                                continue;
+                            maps.add(map.getID());
+                        }
+                    }
+                    else
+                    {
+                        Player otherPlayer = Bukkit.getServer().getOfflinePlayer(args[0]).getPlayer();
+                        for (final SketchMap map : SketchMap.getLoadedMaps())
+                        {
+                            if (map.isPublicProtected())
+                                continue;
+                            if (!map.getOwnerUUID().equals(otherPlayer.getUniqueId()))
+                                continue;
+                            maps.add(map.getID());
+                        }
+                    }
                 }
-                maps.add(map.getID());
+                else
+                {
+                    for (final SketchMap map : SketchMap.getLoadedMaps())
+                    {
+                        if ((map.getPrivacyLevel() == SketchMap.PrivacyLevel.PRIVATE &&
+                                !map.getOwnerUUID().equals(player.getUniqueId()) &&
+                                !map.getAllowedUUID().contains(player.getUniqueId()) &&
+                                !SketchMapUtils.hasPermission(player, "sketchmap.privacy.admin")))
+                            continue;
+                        if (map.isPublicProtected())
+                            continue;
+                        maps.add(map.getID());
+                    }
+                }
             }
         }
+        else // Command issued by console
+        {
+            if (args.length == 0)
+            {
+                for (final SketchMap map : SketchMap.getLoadedMaps())
+                {
+                    if (map.isPublicProtected())
+                        continue;
+                    maps.add(map.getID());
+                }
+            }
+            else
+            {
+                if (args[0].equalsIgnoreCase("mine"))
+                {
+                    sender.sendMessage(ChatColor.RED + prefix + "The console doesn't own any sketchmaps!");
+                    return;
+                }
+                else
+                {
+                    Player otherPlayer = Bukkit.getServer().getOfflinePlayer(args[0]).getPlayer();
+
+                    for (final SketchMap map : SketchMap.getLoadedMaps())
+                    {
+                        if (map.isPublicProtected())
+                            continue;
+                        if (!map.getOwnerUUID().equals(otherPlayer.getUniqueId()))
+                            continue;
+                        maps.add(map.getID());
+                    }
+                }
+            }
+        }
+
         Collections.sort(maps);
 
         int pageSize = 15;
         int numPages = (maps.size() / pageSize) + (maps.size() % pageSize == 0 ? 0 : 1); // This works the same as array length (last page number is one less than number of pages, yay zero!)
 
         int pageToShow = 0;
-        if (args.length > 0)
+        if (args.length > 0 && firstArgIsPageNum)
         {
-            try
-            {
-                pageToShow = Integer.parseInt(args[args.length - 1]) - 1;
-            }
-            catch (Exception e)
-            {
-                pageToShow = 0;
-            }
+            pageToShow = Integer.parseInt(args[args.length - 1]) - 1;
         }
+
         if (pageToShow < 0)
             pageToShow = 0;
         if (pageToShow >= numPages)
@@ -116,6 +182,7 @@ public class SubCommandList extends SketchMapSubCommand
         if (pageEnd > maps.size())
             pageEnd = maps.size() - 1;
 
+        sender.sendMessage("maps.size() " + maps.size() + " pageToShow " + pageToShow + " numPages " + numPages + " pageStart " + pageStart + " pageEnd " + pageEnd);
         sender.sendMessage(ChatColor.RED + prefix + ChatColor.GRAY + "Displaying page " + (pageToShow + 1) + " of " + numPages);
         for (int mapIndex = pageStart; mapIndex <= pageEnd; mapIndex++)
         {
