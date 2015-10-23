@@ -4,7 +4,6 @@ import com.mcplugindev.slipswhitley.sketchmap.SketchMapAPI;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
 import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -71,7 +70,7 @@ public class SubCommandUnpermit extends SketchMapSubCommand
             }
         }
 
-        UUID otherUUID = Bukkit.getServer().getOfflinePlayer(args[1]).getUniqueId();
+        UUID otherUUID = SketchMapUtils.nameToUUID(args[1]);
 
         if (!sketchMap.getAllowedUUID().contains(otherUUID))
         {

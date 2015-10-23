@@ -76,16 +76,12 @@ public class SubCommandGet extends SketchMapSubCommand
         }
 
         final List<ItemStack> items = SketchMapAPI.getOrderedItemSet(map);
-        int inventorySize;
-        for (inventorySize = items.size() + 1; inventorySize % 9 != 0; ++inventorySize)
-        {
-        }
+        int inventorySize = items.size() + 1;
+        if (inventorySize % 9 != 0)
+            inventorySize += 9 - (inventorySize % 9);
         final Inventory inv = Bukkit.createInventory(null, inventorySize,
                 ChatColor.DARK_GREEN + "SketchMap ID: " + ChatColor.DARK_GRAY + map.getID());
-        for (final ItemStack iStack : items)
-        {
-            inv.addItem(iStack);
-        }
+        items.stream().forEach(itemStack -> inv.addItem(itemStack));
         player.openInventory(inv);
         player.sendMessage(ChatColor.GREEN + prefix + "SketchMap ItemSet Generated \"" + ChatColor.GOLD + map.getID()
                 + ChatColor.GREEN + "\"");

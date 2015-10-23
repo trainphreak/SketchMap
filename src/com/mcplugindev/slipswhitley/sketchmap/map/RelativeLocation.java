@@ -2,8 +2,8 @@ package com.mcplugindev.slipswhitley.sketchmap.map;
 
 public class RelativeLocation
 {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public RelativeLocation(final int x, final int y)
     {

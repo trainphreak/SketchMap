@@ -65,11 +65,12 @@ public class SubCommandSetOwner extends SketchMapSubCommand
         }
         map.addAllowedUUID(map.getOwnerUUID());
 
-        UUID newOwnerUUID = Bukkit.getServer().getOfflinePlayer(args[1]).getPlayer().getUniqueId();
+        UUID newOwnerUUID = SketchMapUtils.nameToUUID(args[1]);
         if (map.getAllowedUUID().contains(newOwnerUUID))
             map.removeAllowedUUID(newOwnerUUID);
 
         map.setOwnerUUID(newOwnerUUID);
         sender.sendMessage(ChatColor.GREEN + prefix + Bukkit.getServer().getOfflinePlayer(newOwnerUUID).getName() + " is now the owner of map " + map.getID());
+        map.save();
     }
 }
