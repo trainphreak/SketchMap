@@ -18,9 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.map.MapView;
 
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 public class SubCommandPlace extends SketchMapSubCommand
 {
@@ -97,7 +95,7 @@ public class SubCommandPlace extends SketchMapSubCommand
         final int x = targetBlock.getX();
         final int y = targetBlock.getY();
         final int z = targetBlock.getZ();
-        final Set<ItemFrame> iFrames = new HashSet<>();
+        //final Set<ItemFrame> iFrames = new HashSet<>();
         final Map<RelativeLocation, MapView> mapCollection = map.getMapCollection();
         for (final RelativeLocation relLoc : mapCollection.keySet())
         {
@@ -142,7 +140,7 @@ public class SubCommandPlace extends SketchMapSubCommand
                 final ItemStack iStack = new ItemStack(Material.MAP, 1);
                 iStack.setDurability(SketchMapUtils.getMapID(mapView));
                 iFrame.setItem(iStack);
-                iFrames.add(iFrame);
+                //iFrames.add(iFrame);
             }
             catch (Exception ex)
             {

@@ -81,8 +81,7 @@ public class SubCommandGet extends SketchMapSubCommand
             inventorySize += 9 - (inventorySize % 9);
         final Inventory inv = Bukkit.createInventory(null, inventorySize,
                 ChatColor.DARK_GREEN + "SketchMap ID: " + ChatColor.DARK_GRAY + map.getID());
-        for (ItemStack itemStack : items)
-            inv.addItem(itemStack);
+        items.stream().forEach(itemStack -> inv.addItem(itemStack));
         player.openInventory(inv);
         player.sendMessage(ChatColor.GREEN + prefix + "SketchMap ItemSet Generated \"" + ChatColor.GOLD + map.getID()
                 + ChatColor.GREEN + "\"");

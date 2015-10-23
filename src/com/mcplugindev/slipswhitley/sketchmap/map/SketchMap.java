@@ -3,7 +3,6 @@ package com.mcplugindev.slipswhitley.sketchmap.map;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.file.FileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
 import java.awt.image.BufferedImage;
@@ -85,8 +84,7 @@ public class SketchMap
     private void initMap(final int x, final int y, final MapView mapView)
     {
         final BufferedImage subImage = this.image.getSubimage(x * 128, y * 128, 128, 128);
-        for (MapRenderer mapRenderer : mapView.getRenderers())
-            mapView.removeRenderer(mapRenderer);
+        mapView.getRenderers().stream().forEach(mapRenderer -> mapView.removeRenderer(mapRenderer));
         mapView.addRenderer(new ImageRenderer(subImage));
         this.mapCollection.put(new RelativeLocation(x, y), mapView);
     }
