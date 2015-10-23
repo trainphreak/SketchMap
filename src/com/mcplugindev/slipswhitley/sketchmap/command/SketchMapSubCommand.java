@@ -35,6 +35,7 @@ public abstract class SketchMapSubCommand
         loadCommand(new SubCommandUnpermit());
         loadCommand(new SubCommandInfo());
         loadCommand(new SubCommandSetOwner());
+        loadCommand(new SubCommandReload());
     }
 
     private static void loadCommand(final SketchMapSubCommand sub)

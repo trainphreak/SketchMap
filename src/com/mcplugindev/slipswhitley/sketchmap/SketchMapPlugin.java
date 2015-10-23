@@ -12,22 +12,51 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class SketchMapPlugin extends JavaPlugin
 {
     private static SketchMapPlugin plugin;
-    private FileConfiguration config = getConfig();
+    private FileConfiguration config;
 
-    private static int maxDimension;
-    private static SketchMap.PrivacyLevel defaultPrivacyLevel;
-    private static int maxOwnedMaps; // 0 is unlimited
+    private int maxDimension;
+    private SketchMap.PrivacyLevel defaultPrivacyLevel;
+    private int maxOwnedMaps; // 0 is unlimited
 
     public void onEnable()
     {
         SketchMapPlugin.plugin = this;
+        this.config = getConfig();
         SketchMapUtils.setupPermissions();
         this.setupConfig();
-        this.loadConfig();
-        this.setupCommands();
         this.setupListeners();
+        load();
+    }
+
+    public void onDisable()
+    {
+        this.getCommand("sketchmap").setExecutor(null);
+        SketchMapLoader.unloadMaps();
+    }
+
+    private void load()
+    {
+        this.setupCommands();
+        this.loadConfig();
         SketchMapLoader.loadMaps();
         this.sendEnabledMessage();
+    }
+
+    public void reload()
+    {
+        this.onDisable();
+        this.reloadConfig();
+        this.config = getConfig();
+        this.load();
+    }
+
+    private void setupConfig()
+    {
+        config.addDefault("default-max-dimension", 10);
+        config.addDefault("default-privacy-level", "public");
+        config.addDefault("default-max-owned-maps", 0);
+        config.options().copyDefaults(true);
+        saveConfig();
     }
 
     private void loadConfig()
@@ -70,15 +99,6 @@ public class SketchMapPlugin extends JavaPlugin
         this.getCommand("sketchmap").setExecutor(new SketchMapCommand());
     }
 
-    private void setupConfig()
-    {
-        config.addDefault("default-max-dimension", 10);
-        config.addDefault("default-privacy-level", "public");
-        config.addDefault("default-max-owned-maps", 0);
-        config.options().copyDefaults(true);
-        saveConfig();
-    }
-
     private void setupListeners()
     {
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
@@ -89,17 +109,17 @@ public class SketchMapPlugin extends JavaPlugin
         return SketchMapPlugin.plugin;
     }
 
-    public static int getMaxDimension()
+    public int getMaxDimension()
     {
         return maxDimension;
     }
 
-    public static SketchMap.PrivacyLevel getDefaultPrivacyLevel()
+    public SketchMap.PrivacyLevel getDefaultPrivacyLevel()
     {
         return defaultPrivacyLevel;
     }
 
-    public static int getMaxOwnedMaps()
+    public int getMaxOwnedMaps()
     {
         return maxOwnedMaps;
     }

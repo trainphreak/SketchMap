@@ -126,7 +126,7 @@ public class SketchMapUtils
         }
         else
         {
-            int maxDim = SketchMapPlugin.getMaxDimension();
+            int maxDim = SketchMapPlugin.getPlugin().getMaxDimension();
             if (largerDimension > maxDim)
             {
                 return maxDim;
@@ -162,14 +162,14 @@ public class SketchMapUtils
             }
 
             // If config has no default limit, allowed (note that the perms will override the config)
-            if (SketchMapPlugin.getMaxOwnedMaps() == 0)
+            if (SketchMapPlugin.getPlugin().getMaxOwnedMaps() == 0)
                 return true;
         }
         else
         {
             // If player owns maps greater than the default limit and there is an actual default limit, not allowed
-            if (SketchMapPlugin.getMaxOwnedMaps() != 0)
-                if (ownedMaps > SketchMapPlugin.getMaxOwnedMaps())
+            if (SketchMapPlugin.getPlugin().getMaxOwnedMaps() != 0)
+                if (ownedMaps > SketchMapPlugin.getPlugin().getMaxOwnedMaps())
                     return false;
         }
 

@@ -4,7 +4,6 @@ import com.mcplugindev.slipswhitley.sketchmap.SketchMapAPI;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
 import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -53,14 +52,14 @@ public class SubCommandInfo extends SketchMapSubCommand
             return;
         }
 
-        final String ownerName = Bukkit.getServer().getOfflinePlayer(map.getOwnerUUID()).getName();
+        final String ownerName = SketchMapUtils.uuidToName(map.getOwnerUUID());
         final int xDim = map.getLengthX();
         final int yDim = map.getLengthY();
         final List<UUID> allowedUUID = map.getAllowedUUID();
         final StringBuilder allowedNames = new StringBuilder();
         for (UUID uuid : allowedUUID)
         {
-            allowedNames.append(Bukkit.getServer().getOfflinePlayer(uuid).getName());
+            allowedNames.append(SketchMapUtils.uuidToName(uuid));
             allowedNames.append(", ");
         }
         if (allowedUUID.size() != 0)

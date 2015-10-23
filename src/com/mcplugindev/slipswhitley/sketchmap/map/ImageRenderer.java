@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 public class ImageRenderer extends MapRenderer
 {
-    private BufferedImage image;
+    private final BufferedImage image;
     private Boolean imageRendered;
 
     public ImageRenderer(final BufferedImage image)

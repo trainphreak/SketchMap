@@ -15,8 +15,8 @@ import java.util.logging.Level;
 
 public class FileManager
 {
-    private SketchMap sketchMap;
-    private File mapFile;
+    private final SketchMap sketchMap;
+    private final File mapFile;
     private YamlConfiguration mapConfig;
 
     public FileManager(final SketchMap sketchMap)
@@ -57,20 +57,16 @@ public class FileManager
         this.mapConfig.set("owner-uuid", this.sketchMap.getOwnerUUID().toString());
         this.mapConfig.set("privacy-level", this.sketchMap.getPrivacyLevel().toString());
         final List<String> allowedUUID = new ArrayList<>();
-        for (final UUID uuid : this.sketchMap.getAllowedUUID())
-        {
+        for (UUID uuid : this.sketchMap.getAllowedUUID())
             allowedUUID.add(uuid.toString());
-        }
         this.mapConfig.set("allowed-uuids", allowedUUID);
         this.mapConfig.set("x-panes", this.sketchMap.getLengthX());
         this.mapConfig.set("y-panes", this.sketchMap.getLengthY());
         this.mapConfig.set("public-protected", this.sketchMap.isPublicProtected());
         final List<String> mapCollection = new ArrayList<>();
-        for (final RelativeLocation loc : this.sketchMap.getMapCollection().keySet())
-        {
-            mapCollection.add(String.valueOf(loc.toString()) + " "
-                    + SketchMapUtils.getMapID(this.sketchMap.getMapCollection().get(loc)));
-        }
+        for (RelativeLocation relativeLocation : this.sketchMap.getMapCollection().keySet())
+            mapCollection.add(String.valueOf(relativeLocation.toString()) + " " +
+                    SketchMapUtils.getMapID(this.sketchMap.getMapCollection().get(relativeLocation)));
         this.mapConfig.set("map-collection", mapCollection);
         this.mapConfig.set("base-format", this.sketchMap.getBaseFormat().toString());
         this.mapConfig.set("map-image", SketchMapUtils.imgToBase64String(this.sketchMap.getImage(),

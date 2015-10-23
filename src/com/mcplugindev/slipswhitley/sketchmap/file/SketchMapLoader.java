@@ -3,6 +3,7 @@ package com.mcplugindev.slipswhitley.sketchmap.file;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapAPI;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapPlugin;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
+import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
@@ -65,5 +66,10 @@ public class SketchMapLoader
                 SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] " + (i + 1) + "/" + listFiles.length + " sketchmaps loaded.");
         }
         SketchMapUtils.sendColoredConsoleMessage(ChatColor.YELLOW + "[SketchMap] Finished! " + listFiles.length + " sketchmaps loaded");
+    }
+
+    public static void unloadMaps()
+    {
+        SketchMap.disable();
     }
 }

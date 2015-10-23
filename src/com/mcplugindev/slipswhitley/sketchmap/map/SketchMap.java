@@ -3,7 +3,7 @@ package com.mcplugindev.slipswhitley.sketchmap.map;
 import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.file.FileManager;
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.map.MapRenderer;
 import org.bukkit.map.MapView;
 
 import java.awt.image.BufferedImage;
@@ -11,25 +11,25 @@ import java.util.*;
 
 public class SketchMap
 {
-    private BufferedImage image;
-    private String mapID;
+    private final BufferedImage image;
+    private final String mapID;
     private UUID ownerUUID;
     private PrivacyLevel privacyLevel;
     private List<UUID> allowedUUID;
-    private Integer xPanes;
-    private Integer yPanes;
+    private final Integer xPanes;
+    private final Integer yPanes;
     private Boolean publicProtected;
-    private BaseFormat format;
-    private Map<RelativeLocation, MapView> mapCollection;
-    private FileManager fileManager;
+    private final BaseFormat format;
+    private final Map<RelativeLocation, MapView> mapCollection;
+    private final FileManager fileManager;
     private static Set<SketchMap> sketchMaps;
 
-    public SketchMap(final BufferedImage image, final String mapID, final Player owner, final PrivacyLevel privacyLevel, final int xPanes, final int yPanes,
+    public SketchMap(final BufferedImage image, final String mapID, final UUID ownerUUID, final PrivacyLevel privacyLevel, final int xPanes, final int yPanes,
                      final boolean publicProtected, final BaseFormat format)
     {
         this.image = SketchMapUtils.resize(image, xPanes * 128, yPanes * 128);
         this.mapID = mapID;
-        this.ownerUUID = owner.getUniqueId();
+        this.ownerUUID = ownerUUID;
         this.privacyLevel = privacyLevel;
         this.allowedUUID = new ArrayList<>();
         this.xPanes = xPanes;
@@ -85,7 +85,8 @@ public class SketchMap
     private void initMap(final int x, final int y, final MapView mapView)
     {
         final BufferedImage subImage = this.image.getSubimage(x * 128, y * 128, 128, 128);
-        mapView.getRenderers().forEach((mapRenderer -> mapView.removeRenderer(mapRenderer)));
+        for (MapRenderer mapRenderer : mapView.getRenderers())
+            mapView.removeRenderer(mapRenderer);
         mapView.addRenderer(new ImageRenderer(subImage));
         this.mapCollection.put(new RelativeLocation(x, y), mapView);
     }
@@ -184,6 +185,11 @@ public class SketchMap
             SketchMap.sketchMaps = new HashSet<>();
         }
         return SketchMap.sketchMaps;
+    }
+
+    public static void disable()
+    {
+        SketchMap.sketchMaps = null;
     }
 
     public enum BaseFormat

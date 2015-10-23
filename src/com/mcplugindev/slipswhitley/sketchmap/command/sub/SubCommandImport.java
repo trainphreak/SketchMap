@@ -85,7 +85,7 @@ public class SubCommandImport extends SketchMapSubCommand
             }
             Integer xFrames = null;
             Integer yFrames = null;
-            SketchMap.PrivacyLevel privacyLevel = SketchMapPlugin.getDefaultPrivacyLevel();
+            SketchMap.PrivacyLevel privacyLevel = SketchMapPlugin.getPlugin().getDefaultPrivacyLevel();
             if (args.length > 2)
             {
                 final String[] split = args[2].split(":");
@@ -180,7 +180,7 @@ public class SubCommandImport extends SketchMapSubCommand
                     player.sendMessage(ChatColor.RED + prefix + "Image size exceeds maximum frame dimensions. Your maximum sketchmap size is " + limit + "x" + limit + " frames.");
                     return;
                 }
-                new SketchMap(image, args[0], player, privacyLevel, xFrames, yFrames, false, format);
+                new SketchMap(image, args[0], player.getUniqueId(), privacyLevel, xFrames, yFrames, false, format);
                 player.sendMessage(ChatColor.GREEN + prefix + "Map \"" + ChatColor.GOLD + args[0] + ChatColor.GREEN
                         + "\" Created! " + ChatColor.GOLD + "Use \"/sketchmap get " + args[0] + "\""
                         + " to get this map as map items.");

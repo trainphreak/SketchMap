@@ -130,12 +130,9 @@ public class SubCommandPlace extends SketchMapSubCommand
             }
             if (loc.getBlock().getType() != Material.AIR || backLoc.getBlock().getType() == Material.AIR)
             {
-                player.sendMessage(
-                        ChatColor.RED + prefix + "There is not enough room on that wall to place that Sketch Map");
-                for (final ItemFrame iFrame : iFrames)
-                {
-                    iFrame.remove();
-                }
+                player.sendMessage(ChatColor.RED + prefix + "There is not enough room on that wall to place that Sketch Map");
+                //for(ItemFrame itemFrame : iFrames)
+                //    iFrames.remove(itemFrame);
                 return;
             }
             try
@@ -149,10 +146,8 @@ public class SubCommandPlace extends SketchMapSubCommand
             }
             catch (Exception ex)
             {
-                for (final ItemFrame iFrame2 : iFrames)
-                {
-                    iFrame2.remove();
-                }
+                //for(ItemFrame itemFrame : iFrames)
+                //    iFrames.remove(itemFrame);
                 player.sendMessage(ChatColor.RED + prefix + "Unable to place image on that surface.");
                 return;
             }
@@ -194,22 +189,21 @@ public class SubCommandPlace extends SketchMapSubCommand
         {
             return "west";
         }
-        if (degrees <= 112)
+        else if (degrees <= 112)
         {
             return "north";
         }
-        if (degrees <= 202)
+        else if (degrees <= 202)
         {
             return "east";
         }
-        if (degrees <= 292)
+        else if (degrees <= 292)
         {
             return "south";
         }
-        if (degrees <= 359)
+        else
         {
             return "west";
         }
-        return null;
     }
 }
