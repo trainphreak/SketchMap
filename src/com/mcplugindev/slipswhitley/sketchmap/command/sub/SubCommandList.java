@@ -36,7 +36,7 @@ public class SubCommandList extends SketchMapSubCommand
     @Override
     public String getSyntax()
     {
-        return "/sketchmap list [mine/playername/#] -- /sketchmap list <mine/playername> [#]";
+        return "/sketchmap list [playername/#] -- /sketchmap list <playername> [#]";
     }
 
     @Override
