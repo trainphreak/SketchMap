@@ -48,7 +48,7 @@ public class SketchMapAPI
                         iMeta.setDisplayName(ChatColor.GREEN + "SketchMap ID: " + ChatColor.GOLD + map.getID()
                                 + ChatColor.GREEN + " Pos-X: " + ChatColor.GOLD + (x + 1) + ChatColor.GREEN + " Pos-Y: "
                                 + ChatColor.GOLD + (y + 1));
-                        iMeta.setLore((List) Collections.singletonList(ChatColor.GRAY + "SketchMap ID: " + map.getID()));
+                        iMeta.setLore((List) Collections.singletonList(ChatColor.GRAY + "SketchMap ID: " + map.getID() + ", X:" + (x + 1) + ", Y:" + (y + 1)));
                         iStack.setItemMeta(iMeta);
                         items.add(iStack);
                     }
