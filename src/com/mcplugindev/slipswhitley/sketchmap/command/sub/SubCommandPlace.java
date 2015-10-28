@@ -16,8 +16,11 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemFrame;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.map.MapView;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class SubCommandPlace extends SketchMapSubCommand
@@ -139,6 +142,12 @@ public class SubCommandPlace extends SketchMapSubCommand
                 iFrame.setFacingDirection(face);
                 final ItemStack iStack = new ItemStack(Material.MAP, 1);
                 iStack.setDurability(SketchMapUtils.getMapID(mapView));
+                final ItemMeta iMeta = iStack.getItemMeta();
+                //iMeta.setDisplayName(ChatColor.GREEN + "SketchMap ID: " + ChatColor.GOLD + map.getID() +
+                //        ChatColor.GREEN + " Pos-X: " + ChatColor.GOLD + relLoc.getX() +
+                //        ChatColor.GREEN + " Pos-Y: " + ChatColor.GOLD + relLoc.getY());
+                iMeta.setLore((List) Collections.singletonList(ChatColor.GRAY + "SketchMap ID: " + map.getID() + ", X:" + (relLoc.getX() + 1) + ", Y:" + (relLoc.getY() + 1)));
+                iStack.setItemMeta(iMeta);
                 iFrame.setItem(iStack);
                 //iFrames.add(iFrame);
             }
