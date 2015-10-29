@@ -152,13 +152,11 @@ public class SubCommandCreate extends SketchMapSubCommand
                 player.sendMessage(ChatColor.AQUA + prefix + "Downloading Image");
                 final BufferedImage image = ImageIO.read(url);
                 player.sendMessage(ChatColor.AQUA + prefix + "Processing Image");
-                final String ext = url.getFile().substring(url.getFile().length() - 3);
-                final SketchMap.BaseFormat format = SketchMap.BaseFormat.fromExtension(ext);
+                //final String ext = url.getFile().substring(url.getFile().length() - 3);
+                final SketchMap.BaseFormat format = SketchMap.BaseFormat.PNG;
                 if (format == null)
                 {
-                    player.sendMessage(
-                            ChatColor.RED + prefix + "Sorry, Only JPEG and PNG are supported at this moment. "
-                                    + "But animated Maps will be coming soon.");
+                    player.sendMessage(ChatColor.RED + prefix + "Only JPEG and PNG are supported.");
                     return;
                 }
                 if (args.length == 2)

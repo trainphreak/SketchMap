@@ -207,7 +207,7 @@ public class SketchMap
         {
             if (ext.equalsIgnoreCase("png"))
                 return BaseFormat.PNG;
-            if (ext.equalsIgnoreCase("jpg"))
+            if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("peg"))
                 return BaseFormat.JPEG;
             return null;
         }

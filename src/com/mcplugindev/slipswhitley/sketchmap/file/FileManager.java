@@ -65,9 +65,9 @@ public class FileManager
                 mapCollection.add(relativeLocation.toString() + " " +
                         SketchMapUtils.getMapID(this.sketchMap.getMapCollection().get(relativeLocation))));
         this.mapConfig.set("map-collection", mapCollection);
-        this.mapConfig.set("base-format", this.sketchMap.getBaseFormat().toString());
+        this.mapConfig.set("base-format", SketchMap.BaseFormat.PNG.toString());
         this.mapConfig.set("map-image", SketchMapUtils.imgToBase64String(this.sketchMap.getImage(),
-                this.sketchMap.getBaseFormat().getExtension()));
+                SketchMap.BaseFormat.PNG.getExtension()));
         try
         {
             this.mapConfig.save(this.mapFile);
