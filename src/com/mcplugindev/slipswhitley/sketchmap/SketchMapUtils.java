@@ -160,10 +160,12 @@ public class SketchMapUtils
                 if (hasPermission(player, "sketchmap.ownlimit." + i))
                     return false;
             }
+        }
 
             // If config has no default limit, allowed (note that the perms will override the config)
-            if (SketchMapPlugin.getPlugin().getMaxOwnedMaps() == 0)
-                return true;
+        else if (SketchMapPlugin.getPlugin().getMaxOwnedMaps() == 0)
+        {
+            return true;
         }
         else
         {
