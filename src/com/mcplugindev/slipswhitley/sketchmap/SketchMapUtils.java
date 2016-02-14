@@ -41,7 +41,7 @@ public class SketchMapUtils
 
     public static BufferedImage base64StringToImg(final String imageString)
     {
-        BufferedImage image = null;
+        BufferedImage image;
         try
         {
             final BASE64Decoder decoder = new BASE64Decoder();
@@ -53,6 +53,7 @@ public class SketchMapUtils
         catch (Exception e)
         {
             e.printStackTrace();
+            return null;
         }
         return image;
     }
@@ -72,6 +73,7 @@ public class SketchMapUtils
         catch (IOException e)
         {
             e.printStackTrace();
+            return null;
         }
         return imageString;
     }
