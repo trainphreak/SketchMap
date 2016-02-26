@@ -39,7 +39,7 @@ public class SubCommandCreate extends SketchMapSubCommand
     @Override
     public String getSyntax()
     {
-        return "/sketchmap create <map-id> <URL> [XFRAMES]:[YFRAMES] [public/private]";
+        return "/sketchmap create <map-id> <URL> [<XFRAMES>:<YFRAMES>] [public/private]";
     }
 
     @Override

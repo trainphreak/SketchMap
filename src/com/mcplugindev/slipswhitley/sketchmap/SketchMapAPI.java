@@ -78,7 +78,7 @@ public class SketchMapAPI
             if (!config.isSet(field))
             {
                 throw new SketchMapFileException(
-                        "Unable to load SketchMap file \"" + file.getName() + "\" missing field \"" + field + "\"");
+                        "Unable to load SketchMap file \"" + file.getName() + "\"; missing field \"" + field + "\"");
             }
         }
         final UUID ownerUUID;
@@ -89,7 +89,7 @@ public class SketchMapAPI
         catch (Exception e)
         {
             throw new SketchMapFileException("Unable to load SketchMap file \"" + file.getName()
-                    + "\" cannot parse UUID from field \"owner-uuid\"");
+                    + "\"; cannot parse UUID from field \"owner-uuid\"");
         }
         final SketchMap.PrivacyLevel privacyLevel;
         try
@@ -99,7 +99,7 @@ public class SketchMapAPI
         catch (Exception e)
         {
             throw new SketchMapFileException("Unable to load SketchMap file \"" + file.getName()
-                    + "\" cannot parse PrivacyLevel from field \"privacy-level\"");
+                    + "\"; cannot parse PrivacyLevel from field \"privacy-level\"");
         }
         final List<String> allowedStringList = config.getStringList("allowed-uuids");
         final List<UUID> allowedUUIDList = new ArrayList<>();
@@ -111,31 +111,31 @@ public class SketchMapAPI
         if (allowedStringList == null)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" invalid field \"allowed-uuids\"");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; invalid field \"allowed-uuids\"");
         }
         final Integer xPanes = config.getInt("x-panes");
         if (xPanes == null || xPanes < 1)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" invalid field \"x-panes\"");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; invalid field \"x-panes\"");
         }
         final Integer yPanes = config.getInt("y-panes");
         if (yPanes == null || yPanes < 1)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" invalid field \"y-panes\"");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; invalid field \"y-panes\"");
         }
         final Boolean publicProtected = config.getBoolean("public-protected");
         if (publicProtected == null)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" invalid field \"public-protected\"");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; invalid field \"public-protected\"");
         }
         final List<String> mapList = config.getStringList("map-collection");
         if (mapList == null)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" invalid field \"map-collection\"");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; invalid field \"map-collection\"");
         }
         final Map<Short, RelativeLocation> mapCollection = new HashMap<>();
         for (final String map : mapList)
@@ -144,13 +144,13 @@ public class SketchMapAPI
             if (split.length != 2)
             {
                 throw new SketchMapFileException("Unable to load SketchMap file \"" + file.getName()
-                        + "\" cannot parse field in \"map-colection\"");
+                        + "\"; cannot parse field in \"map-colection\"");
             }
             final RelativeLocation loc = RelativeLocation.fromString(split[0]);
             if (loc == null)
             {
                 throw new SketchMapFileException("Unable to load SketchMap file \"" + file.getName()
-                        + "\" cannot parse field in \"map-colection\"");
+                        + "\"; cannot parse field in \"map-colection\"");
             }
             Short id;
             try
@@ -160,7 +160,7 @@ public class SketchMapAPI
             catch (Exception ex2)
             {
                 throw new SketchMapFileException("Unable to load SketchMap file \"" + file.getName()
-                        + "\" cannot parse field in \"map-colection\"");
+                        + "\"; cannot parse field in \"map-colection\"");
             }
             mapCollection.put(id, loc);
         }
@@ -172,29 +172,31 @@ public class SketchMapAPI
         catch (Exception ex3)
         {
             throw new SketchMapFileException("Unable to load SketchMap file \"" + file.getName()
-                    + "\" cannot parse BaseFormat from field \"base-format\"");
+                    + "\"; cannot parse BaseFormat from field \"base-format\"");
         }
         final String b64Img = config.getString("map-image");
         if (b64Img == null)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" invalid field \"map-image\"");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; invalid field \"map-image\"");
         }
         BufferedImage image;
         try
         {
             image = SketchMapUtils.base64StringToImg(b64Img);
+            if (image == null)
+                throw new Exception("Make the real error message appear");
         }
         catch (Exception ex4)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" parse image from field \"map-image\"");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; cannot parse image from field \"map-image\"");
         }
         final String imageID = file.getName().substring(0, file.getName().lastIndexOf("."));
         if (getMapByID(imageID) != null)
         {
             throw new SketchMapFileException(
-                    "Unable to load SketchMap file \"" + file.getName() + "\" A SketchMap by that ID already exists.");
+                    "Unable to load SketchMap file \"" + file.getName() + "\"; a SketchMap by that ID already exists.");
         }
         return new SketchMap(image, imageID, ownerUUID, privacyLevel, allowedUUIDList, xPanes, yPanes, publicProtected, format, mapCollection);
     }

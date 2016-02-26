@@ -39,7 +39,7 @@ public class SubCommandImport extends SketchMapSubCommand
     @Override
     public String getSyntax()
     {
-        return "/sketchmap import <map-id> <file-name> [XPANES]:[YPANES]";
+        return "/sketchmap import <map-id> <file-name> [<XPANES>:<YPANES>]";
     }
 
     @Override
