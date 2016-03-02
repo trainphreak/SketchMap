@@ -1,3 +1,7 @@
+<h2>Sketchmap is 100% compatible with 1.8 and 1.9</h2>
+Versions before 1.8 are likely to work, but they have not been tested and are not supported.
+
+
 <img src="http://i.imgur.com/4nAFu5K.png"></img>
 
 <h1>About SketchMap</h1>
