@@ -6,7 +6,7 @@ import com.mcplugindev.slipswhitley.sketchmap.SketchMapUtils;
 import com.mcplugindev.slipswhitley.sketchmap.command.SketchMapSubCommand;
 import com.mcplugindev.slipswhitley.sketchmap.file.SketchMapLoader;
 import com.mcplugindev.slipswhitley.sketchmap.map.SketchMap;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
