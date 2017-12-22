@@ -1,3 +1,12 @@
+<h1>DEPRECATED</h1>
+This fork of Sketchmap is deprecated and no longer under active development. It will continue to work with 1.8 and 1.9, and possibly with other versions as well, but there are no guarantees and no bugs will be fixed by me. This is the beauty of Github; if something old is broken, you can fork it and fix the bug yourself, and you'll probably learn more that way anyhow \o/
+
+My replacement plugin (which addresses the server startup time issue, among others) is available at https://www.spigotmc.org/resources/picmap.50826/
+
+
+</br>
+</br>
+</br>
 <h2>Sketchmap is 100% compatible with 1.8 and 1.9</h2>
 Versions before 1.8 are likely to work, but they have not been tested and are not supported.
 
